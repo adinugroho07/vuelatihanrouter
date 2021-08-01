@@ -1,20 +1,23 @@
 <template>
-  <the-navigation @set-page="setActivePage"></the-navigation>
+  <the-navigation></the-navigation>
   <main>
-    <component :is="activePage"></component>
+    <!-- <component :is="activePage"></component> -->
+    <!-- 
+    router-view di bawah adalah untuk menampilkan halaman yang sudah kita define pada vue router di main.js 
+    dan route-view ini seperti <component> bisa berganti2 sesui url yang di akses.
+    -->
+    <router-view></router-view>
   </main>
 </template>
 
 <script>
-import TeamsList from './components/teams/TeamsList.vue';
-import UsersList from './components/users/UsersList.vue';
+// import TeamsList from './components/teams/TeamsList.vue';
+// import UsersList from './components/users/UsersList.vue';
 import TheNavigation from './components/nav/TheNavigation.vue';
 
 export default {
   components: {
     TheNavigation,
-    TeamsList,
-    UsersList,
   },
   data() {
     return {
@@ -38,11 +41,6 @@ export default {
       teams: this.teams,
       users: this.users,
     };
-  },
-  methods: {
-    setActivePage(page) {
-      this.activePage = page;
-    },
   },
 };
 </script>

@@ -1,6 +1,12 @@
 <template>
+  <button @click="confirminput()">Button</button>
   <ul>
-    <user-item v-for="user in users" :key="user.id" :name="user.fullName" :role="user.role"></user-item>
+    <user-item
+      v-for="user in users"
+      :key="user.id"
+      :name="user.fullName"
+      :role="user.role"
+    ></user-item>
   </ul>
 </template>
 
@@ -12,6 +18,12 @@ export default {
     UserItem,
   },
   inject: ['users'],
+  methods: {
+    confirminput() {
+      // untuk menambahkan route ke history dan berpindah halaman.
+      this.$router.push('/teams');
+    },
+  },
 };
 </script>
 

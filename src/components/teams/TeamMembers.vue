@@ -9,6 +9,7 @@
         :role="member.role"
       ></user-item>
     </ul>
+    <router-link to="/teams">Back</router-link>
   </section>
 </template>
 
@@ -17,16 +18,25 @@ import UserItem from '../users/UserItem.vue';
 
 export default {
   components: {
-    UserItem
+    UserItem,
   },
+  inject: ['users', 'teams'],
   data() {
     return {
-      teamName: 'Test',
-      members: [
-        { id: 'u1', fullName: 'Max Schwarz', role: 'Engineer' },
-        { id: 'u2', fullName: 'Max Schwarz', role: 'Engineer' },
-      ],
+      teamName: '',
+      members: [],
     };
+  },
+  created() {
+    const teamid = this.$route.params.teamid;
+    const selectedTeam = this.teams.find((t) => t.id == teamid);
+    const selectedMembers = [];
+    for (const team of selectedTeam.members) {
+      const selecteduser = this.users.find((u) => u.id == team);
+      selectedMembers.push(selecteduser);
+    }
+    this.members = selectedMembers;
+    this.teamName = selectedTeam.name;
   },
 };
 </script>
@@ -48,5 +58,17 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+a {
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background-color: #11005c;
+}
+
+a:hover,
+a:active {
+  background-color: #220a8d;
 }
 </style>
