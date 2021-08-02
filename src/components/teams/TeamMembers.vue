@@ -9,6 +9,7 @@
         :role="member.role"
       ></user-item>
     </ul>
+    <router-link to="/teams/t2">team t2</router-link>
     <router-link to="/teams">Back</router-link>
   </section>
 </template>
@@ -27,16 +28,34 @@ export default {
       members: [],
     };
   },
+  methods: {
+    loadTeamMembers(route) {
+      const teamid = route.params.teamid;
+      const selectedTeam = this.teams.find((t) => t.id == teamid);
+      const selectedMembers = [];
+      for (const team of selectedTeam.members) {
+        const selecteduser = this.users.find((u) => u.id == team);
+        selectedMembers.push(selecteduser);
+      }
+      this.members = selectedMembers;
+      this.teamName = selectedTeam.name;
+    },
+  },
   created() {
-    const teamid = this.$route.params.teamid;
-    const selectedTeam = this.teams.find((t) => t.id == teamid);
-    const selectedMembers = [];
-    for (const team of selectedTeam.members) {
-      const selecteduser = this.users.find((u) => u.id == team);
-      selectedMembers.push(selecteduser);
-    }
-    this.members = selectedMembers;
-    this.teamName = selectedTeam.name;
+    this.loadTeamMembers(this.$route);
+  },
+  //authentication ini akan di panggil sebelum component ini di reuse kembali dengan data yang berbeda
+  beforeRouteUpdate(to, from, next) {
+    console.log(to, from);
+    console.log(
+      'sesaat sebelum component teammembers di render dengan data yang berbeda'
+    );
+    next();
+  },
+  watch: {
+    $route(newRoute) {
+      this.loadTeamMembers(newRoute);
+    },
   },
 };
 </script>

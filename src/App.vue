@@ -8,6 +8,13 @@
     -->
     <router-view></router-view>
   </main>
+  <footer>
+    <!-- 
+    pada attriubute name ini adalah contoh dari implementasi penggunaan dari multiple component pada 1 url. jadi
+    component yang akan di render adalah component dengan key footer dan default, bisa di lihat pada main.js.  
+     -->
+    <router-view name="footer"></router-view>
+  </footer>
 </template>
 
 <script>
